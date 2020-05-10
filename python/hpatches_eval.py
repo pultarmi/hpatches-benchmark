@@ -45,6 +45,7 @@ if __name__ == '__main__':
     print('\n>> Running HPatch evaluation for %s' % blue(descr_name))
         
     descr = load_descrs(path,dist=opts['--dist'],sep=opts['--delimiter'])
+    print('AAAAA')
 
     with open('../tasks/splits/splits.json') as f:
         splits = json.load(f)
