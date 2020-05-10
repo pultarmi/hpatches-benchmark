@@ -218,6 +218,7 @@ def eval_matching(descr,split):
         for t in tp:
             for i in range(1,6):
                 d = getattr(descr[seq], t+str(i))
+                print(d.shape)
                 D = dist_matrix(d_ref,d,descr['distance'])
                 idx = np.argmin(D,axis=1)
                 m_l = np.equal(idx,gt_l)
