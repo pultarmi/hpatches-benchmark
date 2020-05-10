@@ -212,13 +212,13 @@ def eval_matching(descr,split):
     pbar = tqdm(split['test'], desc=green('matching'))
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
+        print(d_ref.shape)
         d_ref = pca.fit_transform(d_ref) ###
         print(d_ref.shape)
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
                 d = getattr(descr[seq], t+str(i))
-                print(d.shape)
                 D = dist_matrix(d_ref,d,descr['distance'])
                 idx = np.argmin(D,axis=1)
                 m_l = np.equal(idx,gt_l)
