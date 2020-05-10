@@ -199,19 +199,21 @@ def gen_verif(seqs,split,N_pos=1e6,N_neg=1e6):
     df.to_csv('../tasks/verif_neg_inter_split-'+split['name']+'.csv',index=False)
 
 
-
 #################
 # Matching task #
 #################
+from sklearn.decomposition import PCA
 def eval_matching(descr,split):
     # print('>> Evaluating %s task' % green('matching'))
     start = time.time()
 
+    pca = PCA(n_components=128) ###
     results = defaultdict(lambda: defaultdict(lambda:defaultdict(dict)))
     pbar = tqdm(split['test'], desc=green('matching'))
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
-        # print(d_ref.shape)
+        d_ref = pca.fit_transform(self, d_ref) ###
+        print(d_ref.shape)
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
