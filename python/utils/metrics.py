@@ -1,4 +1,5 @@
 import numpy as np
+import sklearn.metrics
 
 # TODO: add documentation
 
@@ -50,3 +51,21 @@ def roc(scores,labels,numpos=None):
     fpr = fp / float(np.maximum(n, small))
 
     return fpr,tpr,np.trapz(tpr,fpr)
+
+def AP(scores, labels):
+    # scores = 1.0 / (distances + 1e-8)
+    # labels = labels[np.argsort(distances)]
+    # print(labels[:20])
+    # print(distances[np.argsort(distances)][:20])
+    # print(distances)
+    res = sklearn.metrics.average_precision_score(labels, scores)
+    return res
+
+def prec_recall_curve(labels, distances):
+    scores = 1.0 / (distances + 1e-8)
+    # labels = labels[np.argsort(distances)]
+    # print(labels[:20])
+    # print(distances[np.argsort(distances)][:20])
+    # print(distances)
+    res = sklearn.metrics.precision_recall_curve(labels, scores, pos_label=1)
+    return res
