@@ -207,19 +207,19 @@ def eval_matching(descr,split):
     # print('>> Evaluating %s task' % green('matching'))
     start = time.time()
 
-    # print('RUNNING PCA') ############
-    # pca = PCA(n_components=128) ############
+    print('RUNNING PCA') ############
+    pca = PCA(n_components=128) ############
     results = defaultdict(lambda: defaultdict(lambda:defaultdict(dict)))
     pbar = tqdm(split['test'], desc=green('matching'))
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
-        # pca.fit(d_ref) ############
-        # d_ref = pca.transform(d_ref) ############
+        pca.fit(d_ref) ############
+        d_ref = pca.transform(d_ref) ############
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
                 d = getattr(descr[seq], t+str(i))
-                # d = pca.transform(d) ############
+                d = pca.transform(d) ############
                 D = dist_matrix(d_ref,d,descr['distance'])
                 idx = np.argmin(D,axis=1)
                 m_l = np.equal(idx,gt_l)
