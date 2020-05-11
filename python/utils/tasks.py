@@ -208,6 +208,7 @@ def eval_matching(descr,split):
     # print('>> Evaluating %s task' % green('matching'))
     start = time.time()
 
+    aux = torch.load('sample_out.pt')
     print('RUNNING PCA') ############
     pca = PCA(n_components=128) ############
     results = defaultdict(lambda: defaultdict(lambda:defaultdict(dict)))
@@ -215,7 +216,6 @@ def eval_matching(descr,split):
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
         d_ref = normalize(pca.fit_transform(d_ref)) ############
-        print(d_ref)
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
