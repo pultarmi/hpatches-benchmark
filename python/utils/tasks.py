@@ -211,7 +211,7 @@ def eval_matching(descr,split):
     print('RUNNING PCA') ############
     pca = PCA(n_components=128) ############
     sample_out = torch.load('sample_out.pt') ############
-    pca.fit(sample_out.cpu()) ############
+    pca.fit(sample_out.cpu().detach().numpy() ) ############
     results = defaultdict(lambda: defaultdict(lambda:defaultdict(dict)))
     pbar = tqdm(split['test'], desc=green('matching'))
     for seq in pbar:
