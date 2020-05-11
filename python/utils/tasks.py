@@ -202,26 +202,18 @@ def gen_verif(seqs,split,N_pos=1e6,N_neg=1e6):
 #################
 # Matching task #
 #################
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import normalize
 def eval_matching(descr,split):
     # print('>> Evaluating %s task' % green('matching'))
     start = time.time()
 
-    # print('RUNNING PCA') ############
-    # pca = PCA(n_components=128) ############
-    # sample_out = torch.load('sample_out.pt') ############
-    # pca.fit(sample_out.cpu().detach().numpy() ) ############
     results = defaultdict(lambda: defaultdict(lambda:defaultdict(dict)))
     pbar = tqdm(split['test'], desc=green('matching'))
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
-        # d_ref = normalize(pca.transform(d_ref)) ############
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
                 d = getattr(descr[seq], t+str(i))
-                # d = normalize(pca.transform(d)) ############
                 D = dist_matrix(d_ref,d,descr['distance'])
                 idx = np.argmin(D,axis=1)
                 m_l = np.equal(idx,gt_l)
