@@ -214,6 +214,7 @@ def eval_matching(descr,split):
     for seq in pbar:
         d_ref = getattr(descr[seq], 'ref')
         d_ref = pca.fit_transform(d_ref) ############
+        print(d_ref)
         gt_l = np.arange(d_ref.shape[0])
         for t in tp:
             for i in range(1,6):
